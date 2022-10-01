@@ -17,6 +17,7 @@ limitations under the License.
 package cri
 
 import (
+	"context"
 	"time"
 
 	runtimeapi "k8s.io/cri-api/pkg/apis/runtime/v1"
@@ -122,6 +123,8 @@ type ImageManagerService interface {
 	ImageStatus(image *runtimeapi.ImageSpec, verbose bool) (*runtimeapi.ImageStatusResponse, error)
 	// PullImage pulls an image with the authentication config.
 	PullImage(image *runtimeapi.ImageSpec, auth *runtimeapi.AuthConfig, podSandboxConfig *runtimeapi.PodSandboxConfig) (string, error)
+	// PullImageWithProgress pulls an image with the authentication config.
+	PullImageWithProgress(image *runtimeapi.ImageSpec, auth *runtimeapi.AuthConfig, podSandboxConfig *runtimeapi.PodSandboxConfig) (runtimeapi.ImageService_PullImageWithProgressClient, context.CancelFunc, error)
 	// RemoveImage removes the image.
 	RemoveImage(image *runtimeapi.ImageSpec) error
 	// ImageFsInfo returns information of the filesystem that is used to store images.
